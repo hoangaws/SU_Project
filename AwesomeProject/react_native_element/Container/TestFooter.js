@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, ScrollView, View, Alert, Text, Button, TouchableOpacity } from 'react-native';
 import { List, ListItem, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
-import {toggleNext,togglePre} from './redux/action/actionTest';
-import styles from './Styles/styles.js';
+import {toggleNext,togglePre} from '../Redux/action/actionTest';
+import styles from '../Styles/styles.js';
 
 class TestFooter extends Component {
 

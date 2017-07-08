@@ -5,7 +5,7 @@ import {
   Text,
   View
 } from 'react-native';
-import {Routers} from './react_native_element/Routers.js';
+import {Routers} from './react_native_element/Presentation/Routers.js';
 
 export default class AwesomeProject extends Component {
   render() {

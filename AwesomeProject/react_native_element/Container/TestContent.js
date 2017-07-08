@@ -6,8 +6,8 @@ import {
 } from 'react-native-admob';
 import { practice } from '../data/RC1/lesson1';
 import { connect } from 'react-redux';
-import {toggleShowAnswer,toggleTips,toggleChoose,toggleCheck} from './redux/action/actionTest';
-import styles from './Styles/styles.js';
+import {toggleShowAnswer,toggleTips,toggleChoose,toggleCheck} from '../Redux/action/actionTest';
+import styles from '../Styles/styles.js';
 
 class TestContent extends Component {
 

@@ -10,8 +10,8 @@ import TestContent from './TestContent';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import combineReducer from './redux/reducer/combineReducer';
-import styles from './Styles/styles.js';
+import combineReducer from '../Redux/reducer/combineReducer';
+import styles from '../Styles/styles.js';
 
 const store = createStore(combineReducer);
 

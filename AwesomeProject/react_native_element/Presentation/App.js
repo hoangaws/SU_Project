@@ -3,12 +3,7 @@ import { ScrollView, View, TouchableOpacity, Text } from 'react-native';
 
 import { SideMenu, List, Tabs, Tab, Icon, ListItem, Rating, ButtonGroup, Badge, Button } from 'react-native-elements';
 
-import Screen_A from './Screen_A.js';
-import Screen_B from './Screen_B.js';
-import Screen_C from './Screen_C.js';
-import Screen_D from './Screen_D.js';
-import App2 from './App2.js';
-import RadarChartScreen from './RadarChartScreen.js';
+import RadarChartScreen from '../Container/RadarChartScreen.js';
 import SplashScreen from 'react-native-splash-screen';
 
 class App extends Component {

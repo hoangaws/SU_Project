@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, View, TouchableOpacity, Text } from 'react-native';
 import { List, ListItem,Rating } from 'react-native-elements';
-import Test from './Test.js';
+import Test from '../Container/Test.js';
 
 export default class ScreenC extends Component {
 
