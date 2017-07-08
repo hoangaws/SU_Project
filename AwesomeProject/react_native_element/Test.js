@@ -10,45 +10,10 @@ import TestContent from './TestContent';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import combineReducer from './redux/reducer/combineReducer';
+import styles from './Styles/styles.js';
 
-const defaultState = {
-  stt: 0,
-  showCheck: false,
-  showExplain: false,
-  showDiscuss: false,
-  showTextExplain1: false,
-  showTextExplain2: false
-};
-
-const reducer = (state = defaultState, action) => {
-  if (action.type === 'CLICK_CHECK') return {
-    stt: state.stt, showCheck: !state.showCheck, showExplain: !state.showExplain,
-    showDiscuss: !state.showDiscuss, showTextExplain1: state.showTextExplain1, showTextExplain2: state.showTextExplain2
-  };
-  if (action.type === 'CLICK_CHOOSE') return {
-    stt: state.stt, showCheck: true, showExplain: state.showExplain,
-    showDiscuss: state.showDiscuss, showTextExplain1: state.showTextExplain1, showTextExplain2: state.showTextExplain2
-  };
-  if (action.type === 'CLICK_SHOW') return {
-    stt: state.stt, showCheck: state.showCheck, showExplain: state.showExplain,
-    showDiscuss: state.showDiscuss, showTextExplain1: !state.showTextExplain1, showTextExplain2: false
-  };
-  if (action.type === 'CLICK_TIPS') return {
-    stt: state.stt, showCheck: state.showCheck, showExplain: state.showExplain,
-    showDiscuss: state.showDiscuss, showTextExplain1: false, showTextExplain2: !state.showTextExplain2
-  };
-  if (action.type === 'NEXT') return {
-    stt: state.stt + 1, showCheck: state.showCheck, showExplain: state.showExplain,
-    showDiscuss: state.showDiscuss, showTextExplain1: state.showTextExplain1, showTextExplain2: state.showTextExplain2
-  };
-  if (action.type === 'PRE') return {
-    stt: state.stt - 1, showCheck: state.showCheck, showExplain: state.showExplain,
-    showDiscuss: state.showDiscuss, showTextExplain1: state.showTextExplain1, showTextExplain2: state.showTextExplain2
-  };
-  return state;
-};
-
-const store = createStore(reducer);
+const store = createStore(combineReducer);
 
 class UserDetail extends Component {
 
@@ -72,12 +37,4 @@ class UserDetail extends Component {
     );
   }
 }
-const styles = StyleSheet.create({
-
-  mainviewStyle: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-})
-
 export default UserDetail;

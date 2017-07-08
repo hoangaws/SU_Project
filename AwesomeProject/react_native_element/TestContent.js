@@ -6,53 +6,31 @@ import {
 } from 'react-native-admob';
 import { practice } from '../data/RC1/lesson1';
 import { connect } from 'react-redux';
+import {toggleShowAnswer,toggleTips,toggleChoose,toggleCheck} from './redux/action/actionTest';
+import styles from './Styles/styles.js';
 
 class TestContent extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            pressed: false,
-            choose: ""
-        }
+    _onPressShow() {
+        this.props.toggleShowAnswer(this.props.stt);
     }
 
-    _onPressButton1() {
-        this.props.dispatch({ type: 'CLICK_SHOW' });
+    _onPressTips() {
+        this.props.toggleTips(this.props.stt);
     }
 
-    _onPressButton2() {
-        this.props.dispatch({ type: 'CLICK_TIPS' });
-    }
-
-    _choose(chose) {
-        this.props.dispatch({ type: 'CLICK_CHOOSE' });
-        this.setState({
-            choose: chose
-        })
+    _choose(id,choose) {
+        this.props.toggleChoose(id,choose);
     }
 
     _check() {
-        this.props.dispatch({ type: 'CLICK_CHECK' });
-        this.pressed = true;
-        switch (this.props.press) {
-            case 'A':
-                ;
-            case 'B':
-                ;
-            case 'C':
-                ;
-            case 'D':
-                ;
-            default:
-        }
-
+        this.props.toggleCheck(this.props.stt);
     }
 
 
     render() {
-        let display1 = this.props.showTextExplain1 ? `${practice[this.props.stt].ShowExplain}` : '';
-        let display2 = this.props.showTextExplain2 ? `${practice[this.props.stt].Tips}` : '';
+        let display1 = this.props.arrWords[this.props.stt].showTextExplain1 ? `${practice[this.props.stt].ShowExplain}` : '';
+        let display2 = this.props.arrWords[this.props.stt].showTextExplain2 ? `${practice[this.props.stt].Tips}` : '';
 
         return (
             <ScrollView style={styles.scrollview}>
@@ -60,37 +38,37 @@ class TestContent extends Component {
 
                     <View style={{ flexDirection: 'row', }}>
                         <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Question {practice[this.props.stt].Question} : </Text>
-                        <TouchableOpacity style={this.props.showDiscuss ? styles.showbutton : styles.hidden} onPress={() => { this._discuss() }}>
+                        <TouchableOpacity style={this.props.arrWords[this.props.stt].checked ? styles.showbutton : styles.hidden} onPress={() => { this._discuss() }}>
                             <Text style={{ fontSize: 20, color: "dodgerblue", backgroundColor: "white", }} >Discuss</Text>
                         </TouchableOpacity>
                     </View>
 
                     <Text style={{ fontSize: 20, }}>{`${practice[this.props.stt].Content}`}</Text>
 
-                    <View style={styles.button}>
+                    <View style={styles.button3}>
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "baseline" }}>
 
-                            <TouchableOpacity onPress={() => { this._choose("A") }} disabled={this.pressed}>
+                            <TouchableOpacity onPress={() => { this._choose(this.props.stt,"A") }} disabled={this.props.arrWords[this.props.stt].checked}>
                                 <View style={{ backgroundColor: 'rgba(0,0,0,0)' }}>
-                                    <Text style={this.state.choose === "A" ? styles.optionChoose : styles.optionDefault} > (A) {`${practice[this.props.stt].OptionA}`} </Text>
+                                    <Text style={this.props.arrWords[this.props.stt].answer === "A" ? styles.optionChoose : styles.optionDefault} > (A) {`${practice[this.props.stt].OptionA}`} </Text>
                                 </View>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => { this._choose("B") }} disabled={this.pressed}>
-                                <Text style={this.state.choose === "B" ? styles.optionChoose : styles.optionDefault}> (B) {`${practice[this.props.stt].OptionB}`} </Text>
+                            <TouchableOpacity onPress={() => { this._choose(this.props.stt,"B") }} disabled={this.props.arrWords[this.props.stt].checked}>
+                                <Text style={this.props.arrWords[this.props.stt].answer === "B" ? styles.optionChoose : styles.optionDefault}> (B) {`${practice[this.props.stt].OptionB}`} </Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => { this._choose("C") }} disabled={this.pressed}>
-                                <Text style={this.state.choose === "C" ? styles.optionChoose : styles.optionDefault} > (C) {`${practice[this.props.stt].OptionC}`} </Text>
+                            <TouchableOpacity onPress={() => { this._choose(this.props.stt,"C") }} disabled={this.props.arrWords[this.props.stt].checked}>
+                                <Text style={this.props.arrWords[this.props.stt].answer === "C" ? styles.optionChoose : styles.optionDefault} > (C) {`${practice[this.props.stt].OptionC}`} </Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => { this._choose("D") }} disabled={this.pressed}>
-                                <Text style={this.state.choose === "D" ? styles.optionChoose : styles.optionDefault} > (D) {`${practice[this.props.stt].OptionD}`} </Text>
+                            <TouchableOpacity onPress={() => { this._choose(this.props.stt,"D") }} disabled={this.props.arrWords[this.props.stt].checked}>
+                                <Text style={this.props.arrWords[this.props.stt].answer === "D" ? styles.optionChoose : styles.optionDefault} > (D) {`${practice[this.props.stt].OptionD}`} </Text>
                             </TouchableOpacity>
 
                         </View>
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                            <TouchableOpacity style={this.props.showCheck ? styles.showbutton : styles.hidden}
+                            <TouchableOpacity style={this.props.arrWords[this.props.stt].showCheck ? styles.showbutton : styles.hidden}
                                 onPress={() => { this._check() }}>
                                 <Icon
                                     reverse
@@ -104,14 +82,14 @@ class TestContent extends Component {
                     </View>
 
 
-                    <View style={styles.button}>
+                    <View style={styles.button3}>
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                            <TouchableOpacity style={this.props.showExplain ? styles.showbutton : styles.hidden} onPress={() => { this.props.dispatch({ type: 'CLICK_SHOW' }); }}>
+                            <TouchableOpacity style={this.props.arrWords[this.props.stt].checked ? styles.showbutton : styles.hidden} onPress={ () => { this._onPressShow() }}>
                                 <Text style={{ fontSize: 20, color: "dodgerblue", backgroundColor: "white", }}>ShowExplain</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                            <TouchableOpacity style={this.props.showExplain ? styles.showbutton : styles.hidden} onPress={() => { this.props.dispatch({ type: 'CLICK_TIPS' }); }}>
+                            <TouchableOpacity style={this.props.arrWords[this.props.stt].checked ? styles.showbutton : styles.hidden} onPress={ () => { this._onPressTips() }}>
                                 <Text style={{ fontSize: 20, color: "dodgerblue", backgroundColor: "white", }}>Tips</Text>
                             </TouchableOpacity>
                         </View>
@@ -132,70 +110,11 @@ class TestContent extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-
-    mainviewStyle: {
-        flex: 1,
-        flexDirection: 'column',
-    },
-
-    scrollview: {
-        margin: 15,
-    },
-
-    hidden: {
-        width: 0,
-        height: 0
-    },
-    showbutton: {
-    },
-    optionDefault: {
-        fontSize: 20,
-        color: "#0060cd",
-    },
-    optionChoose: {
-        fontSize: 20,
-        color: "white",
-        backgroundColor: "#0060cd",
-        borderRadius: 3,
-    },
-    button2: {
-        marginTop: 20,
-        justifyContent: 'space-between'
-    },
-    button: {
-        marginTop: 20,
-        flexDirection: 'row',
-    },
-    textAnswer: {
-
-    },
-    admob: {
-        flex: 0.1,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: 58,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    functionStyle: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-    }
-})
-
 function mapStateToProps(state) {
     return {
-        stt: state.stt,
-        showCheck: state.showCheck,
-        showExplain: state.showExplain,
-        showDiscuss: state.showDiscuss,
-        showTextExplain1: state.showTextExplain1,
-        showTextExplain2: state.showTextExplain2
+        arrWords: state.arrWords,
+        stt: state.isAdding
     };
 }
 
-export default connect(mapStateToProps)(TestContent);
+export default connect(mapStateToProps,{toggleShowAnswer,toggleTips,toggleChoose,toggleCheck})(TestContent);

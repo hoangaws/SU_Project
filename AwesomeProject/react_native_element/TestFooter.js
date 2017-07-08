@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 import { StyleSheet, ScrollView, View, Alert, Text, Button, TouchableOpacity } from 'react-native';
 import { List, ListItem, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
+import {toggleNext,togglePre} from './redux/action/actionTest';
+import styles from './Styles/styles.js';
 
 class TestFooter extends Component {
 
     _next() {
         if (this.props.stt < 51) {
-            this.props.dispatch({ type: 'NEXT' });
+            this.props.toggleNext();
         }
     }
 
     _pre() {
         if (this.props.stt > 0) {
-            this.props.dispatch({ type: 'PRE' });
+            this.props.togglePre();
         }
     }
 
@@ -61,30 +63,7 @@ class TestFooter extends Component {
 
 function mapStateToProps(state) {
     return {
-        stt: state.stt,
+        stt: state.isAdding
     };
 }
-export default connect(mapStateToProps)(TestFooter);
-
-
-const styles = StyleSheet.create({
-    footer: {
-        position: 'absolute',
-        flex: 0.1,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: 58,
-        backgroundColor: 'white',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: '#949090'
-    },
-    button: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
+export default connect(mapStateToProps,{toggleNext,togglePre})(TestFooter);
