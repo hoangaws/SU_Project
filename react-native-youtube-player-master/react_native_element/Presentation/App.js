@@ -1,55 +1,49 @@
 import React, { Component } from 'react';
-import { View, Text ,StyleSheet} from 'react-native';
+import { View, Text } from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
 import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
 
-import combineReducer from '../Redux/reducer/combineReducer';
-import SplashScreen from 'react-native-splash-screen';
+// import combineReducer from '../Redux/reducer/combineReducer.js';
+// import SplashScreen from 'react-native-splash-screen';
 import Icon from 'react-native-vector-icons/FontAwesome.js';
 import RadarChartScreen from '../Container/RadarChartScreen.js';
-import Test from '../Container/Test.js';
 import ScreenA from './Screen_A.js';
-// import { Tabs, Tab, Icon, Button } from 'react-native-elements'
 
 const TabIcon = (props) => <Icon size={24} name={props.name} color={props.selected ? "black" : "#c8c3c3"} />;
-const store = createStore(combineReducer);
+const defaultstate={
+  stt:0
+}
+const reducer = (state=defaultstate,action) =>{
+
+}
+const store = createStore(reducer);
 const RouterWithRedux = connect()(Router);
 
 
 export default class App extends Component {
 
-    componentDidMount() {
-        SplashScreen.hide();
-    }
+    // componentDidMount() {
+    //     SplashScreen.hide();
+    // }
 
   render() {
     return (
       <Provider store={store}>
+<View style={{ flex: 1 }}>
+
           <RouterWithRedux>
-            <Scene key="root" initial tabs={true}  tabBarStyle={style.tabBarStyle}>
-                <Scene key="search" component={RadarChartScreen} hideTabBar={true} title="RadarChartScreen" duration={0} icon={TabIcon} animation="fade" />
-                <Scene key="download" component={ScreenA} initial  
-                     title="ScreenA"
-                    renderLeftButton={() => <Text>asad</Text>}
-                    renderRightButton={() => <Text>+</Text>}
-                    duration={0} icon={TabIcon}  animation="fade" />
-                <Scene key="book" component={ScreenA} hideNavBar={true} title="RadarChartScreen" duration={0} icon={TabIcon} animation="fade" />
-                <Scene key="book" component={Test} hideNavBar={true} hideTabBar={true} title="Test" duration={0} icon={TabIcon} animation="fade" />
+            <Scene key="root" initial tabs={true}>
+                <Scene key="search" component={RadarChartScreen} title="Search123" duration={0} icon={TabIcon} animation="fade" />
+                <Scene key="download" component={ScreenA} initial title="Downloads123" duration={0} icon={TabIcon}  animation="fade" />
             </Scene>
           </RouterWithRedux>
-      </Provider>
+          </View>
+
+        </Provider>
     );
   }
 }
-
-let style = StyleSheet.create({
-        tabBarStyle: {
-            borderColor    : 'blue',
-            backgroundColor: 'blue',
-            borderBottomWidth: 1
-        }
-    });
 
 
 // class App extends Component {
@@ -99,62 +93,62 @@ let style = StyleSheet.create({
 //         const buttons = ['Listening', 'Reading'];
 //         const { selectedIndex } = this.state;
 
-        // const list = [
-        //     {
-        //         name: 'Amy Farha1',
-        //         avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        //         subtitle: 'Vice President',
-        //         icon: 'av-timer'
-        //     },
-        //     {
-        //         name: 'Chris Jackson2',
-        //         avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        //         subtitle: 'Vice Chairman',
-        //         icon: 'flight-takeoff'
-        //     },
-        //     {
-        //         name: 'Amy Farha3',
-        //         avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        //         subtitle: 'Vice President',
-        //         icon: 'av-timer'
-        //     },
-        //     {
-        //         name: 'Chris Jackson4',
-        //         avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        //         subtitle: 'Vice Chairman',
-        //         icon: 'flight-takeoff'
-        //     },
-        //     {
-        //         name: 'Amy Farha5',
-        //         avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        //         subtitle: 'Vice President',
-        //         icon: 'av-timer'
-        //     },
-        //     {
-        //         name: 'Chris Jackson6',
-        //         avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        //         subtitle: 'Vice Chairman',
-        //         icon: 'flight-takeoff'
-        //     },
-        //     {
-        //         name: 'Chris Jackson7',
-        //         avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        //         subtitle: 'Vice Chairman',
-        //         icon: 'flight-takeoff'
-        //     },
-        //     {
-        //         name: 'Amy Farha8',
-        //         avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        //         subtitle: 'Vice President',
-        //         icon: 'av-timer'
-        //     },
-        //     {
-        //         name: 'Chris Jackson9',
-        //         avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        //         subtitle: 'Vice Chairman',
-        //         icon: 'flight-takeoff'
-        //     },
-        // ]
+//         const list = [
+//             {
+//                 name: 'Amy Farha1',
+//                 avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+//                 subtitle: 'Vice President',
+//                 icon: 'av-timer'
+//             },
+//             {
+//                 name: 'Chris Jackson2',
+//                 avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+//                 subtitle: 'Vice Chairman',
+//                 icon: 'flight-takeoff'
+//             },
+//             {
+//                 name: 'Amy Farha3',
+//                 avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+//                 subtitle: 'Vice President',
+//                 icon: 'av-timer'
+//             },
+//             {
+//                 name: 'Chris Jackson4',
+//                 avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+//                 subtitle: 'Vice Chairman',
+//                 icon: 'flight-takeoff'
+//             },
+//             {
+//                 name: 'Amy Farha5',
+//                 avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+//                 subtitle: 'Vice President',
+//                 icon: 'av-timer'
+//             },
+//             {
+//                 name: 'Chris Jackson6',
+//                 avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+//                 subtitle: 'Vice Chairman',
+//                 icon: 'flight-takeoff'
+//             },
+//             {
+//                 name: 'Chris Jackson7',
+//                 avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+//                 subtitle: 'Vice Chairman',
+//                 icon: 'flight-takeoff'
+//             },
+//             {
+//                 name: 'Amy Farha8',
+//                 avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+//                 subtitle: 'Vice President',
+//                 icon: 'av-timer'
+//             },
+//             {
+//                 name: 'Chris Jackson9',
+//                 avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+//                 subtitle: 'Vice Chairman',
+//                 icon: 'flight-takeoff'
+//             },
+//         ]
 
 //         return (
 //             <Tabs hidesTabTouch hidesTabTouch tabBarStyle={tabBarStyle} sceneStyle={sceneStyle} >
@@ -197,21 +191,21 @@ let style = StyleSheet.create({
 //                             <List containerStyle={{ marginTop: 0, marginBottom: 55, borderTopWidth: 0, borderBottomWidth: 0, borderBottomColor: 'red' }}>
 //                                 {
 //                                     list.map((item, i) => (
-                                        // <ListItem
-                                        //     roundAvatar
-                                        //     key={i}
-                                        //     title={item.name}
-                                        //     badge={{ value: 3, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
-                                        //     subtitle={
-                                        //         <Rating type="heart"
-                                        //             readonly
-                                        //             fractions={5}
-                                        //             startingValue={4}
-                                        //             imageSize={25}
-                                        //         />}
-                                        //     avatar={{ uri: item.avatar_url }}
-                                        //     onPress={() => navigate('Test_Screens')}
-                                        // />
+//                                         <ListItem
+//                                             roundAvatar
+//                                             key={i}
+//                                             title={item.name}
+//                                             badge={{ value: 3, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
+//                                             subtitle={
+//                                                 <Rating type="heart"
+//                                                     readonly
+//                                                     fractions={5}
+//                                                     startingValue={4}
+//                                                     imageSize={25}
+//                                                 />}
+//                                             avatar={{ uri: item.avatar_url }}
+//                                             onPress={() => navigate('Test_Screens')}
+//                                         />
 //                                     ))
 //                                 }
 //                             </List>

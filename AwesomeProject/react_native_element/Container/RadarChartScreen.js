@@ -11,7 +11,7 @@ import {RadarChart} from 'react-native-charts-wrapper';
 
 
 class RadarChartScreen extends React.Component {
-
+state = {page: 'download'}
   constructor() {
     super();
 
@@ -64,8 +64,6 @@ class RadarChartScreen extends React.Component {
 
   render() {
     return (
-
-
         <View style={styles.container}>
           <RadarChart
             style={styles.chart}

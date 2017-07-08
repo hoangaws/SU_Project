@@ -1,18 +1,7 @@
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-import {Routers} from './react_native_element/Presentation/Routers.js';
+import {AppRegistry} from 'react-native';
+import App from './react_native_element/Presentation/App.js';
 
-export default class AwesomeProject extends Component {
-  render() {
-    return (
-      <Routers />
-    );
-  }
-}
+const AwesomeProject = () => <App />;
 
 AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);

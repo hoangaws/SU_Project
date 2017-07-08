@@ -15,17 +15,17 @@ import styles from '../Styles/styles.js';
 
 // const store = createStore(combineReducer);
 
-class Test extends Component {
+class UserDetail extends Component {
 
-  // static navigationOptions = {
-  //   title: 'Test 123',
-  //   headerTintColor: 'blue',
-  //   headerRight: <Icon name='settings' color='#517fa4'
-  //     size={33} containerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />,
-  // };
+  static navigationOptions = {
+    title: 'Test 123',
+    headerTintColor: 'blue',
+    headerRight: <Icon name='settings' color='#517fa4'
+      size={33} containerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />,
+  };
 
   render() {
-    // const { navigate } = this.props.navigation;
+    const { navigate } = this.props.navigation;
 
     return (
       // <Provider store={store}>
@@ -37,4 +37,4 @@ class Test extends Component {
     );
   }
 }
-export default Test;
+export default UserDetail;
