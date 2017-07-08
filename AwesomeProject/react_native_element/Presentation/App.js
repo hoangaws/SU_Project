@@ -35,7 +35,7 @@ export default class App extends Component {
                     renderRightButton={() => <Text>+</Text>}
                     duration={0} icon={TabIcon}  animation="fade" />
                 <Scene key="book" component={ScreenA} hideNavBar={true} title="RadarChartScreen" duration={0} icon={TabIcon} animation="fade" />
-                <Scene key="book" component={Test} hideNavBar={true} hideTabBar={true} title="Test" duration={0} icon={TabIcon} animation="fade" />
+                <Scene key="star" component={Test} hideNavBar={true} hideTabBar={true} title="Test" duration={0} icon={TabIcon} animation="fade" />
             </Scene>
           </RouterWithRedux>
       </Provider>
