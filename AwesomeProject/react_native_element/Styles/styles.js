@@ -38,15 +38,28 @@ const styles = StyleSheet.create({
     },
     showbutton: {
     },
-    optionDefault: {
+    optionBlue: {
+        color: "blue",
+        fontSize: 20
+    },
+    optionWhite: {
+        color: "white",
+        fontSize: 20
+    },
+    optionGreen: {
+        color: "green",
         fontSize: 20,
-        color: "#0060cd",
+    },
+    optionRed: {
+        color: "red",
+        fontSize: 20,
     },
     optionChoose: {
         fontSize: 20,
-        color: "white",
-        backgroundColor: "#0060cd",
+        backgroundColor: "blue",
         borderRadius: 3,
+    },
+    optionNoChoose: {
     },
     button2: {
         marginTop: 20,

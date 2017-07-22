@@ -9,19 +9,9 @@ import { connect } from 'react-redux';
 import { toggleShowAnswer, toggleTips, toggleChoose, toggleCheck } from '../Redux/action/actionTest';
 import styles from '../Styles/styles.js';
 
-class TestContent extends Component {
 
-    constructor(props) {
-        super(props);
-        fetch('https://firebasestorage.googleapis.com/v0/b/fir-rn-25d9e.appspot.com/o/json%2FRC1-1.json?alt=media&token=6b5b8fdb-3776-4b83-ac0f-03765bd79b3d')
-            .then((res) => res.json())
-            .then((data) => {
-                practice = data;
-                console.log("c"+practice[0].Question);
-                console.log(practice[1].Question);
-                console.log(practice[2].Question);
-            });
-    }
+const Realm = require('realm');
+class TestContent extends Component {
 
     _onPressShow() {
         this.props.toggleShowAnswer(this.props.stt);
@@ -39,70 +29,152 @@ class TestContent extends Component {
         this.props.toggleCheck(this.props.stt);
     }
 
-    componentWillMount() {
-        fetch('https://firebasestorage.googleapis.com/v0/b/fir-rn-25d9e.appspot.com/o/json%2FRC1-1.json?alt=media&token=6b5b8fdb-3776-4b83-ac0f-03765bd79b3d')
-            .then((res) => res.json())
-            .then((data) => {
-                practice = data;
-                console.log("w"+practice[0].Question);
-                console.log(practice[1].Question);
-                console.log(practice[2].Question);
-            });
-    }
-
-    componentDidMount() {
-        fetch('https://firebasestorage.googleapis.com/v0/b/fir-rn-25d9e.appspot.com/o/json%2FRC1-1.json?alt=media&token=6b5b8fdb-3776-4b83-ac0f-03765bd79b3d')
-            .then((res) => res.json())
-            .then((data) => {
-                practice = data;
-                console.log(practice[0].Question);
-                console.log(practice[1].Question);
-                console.log(practice[2].Question);
-            });
-    }
-
-
     render() {
-        let display1 = this.props.arrWords[this.props.stt].showTextExplain1 ? `${practice[this.props.stt].ShowExplain}` : '';
-        let display2 = this.props.arrWords[this.props.stt].showTextExplain2 ? `${practice[this.props.stt].Tips}` : '';
+
+        let realm = new Realm({
+            schema: [{
+                name: 'test6', properties: {
+                    Question: 'string',
+                    Content: 'string',
+                    OptionA: 'string',
+                    OptionB: 'string',
+                    OptionC: 'string',
+                    OptionD: 'string',
+                    //Translate: 'string',
+                    //ShowExplain: 'string',
+                    Answer: 'string'
+                }
+            }]
+        });
+
+        fetch('https://firebasestorage.googleapis.com/v0/b/fir-rn-25d9e.appspot.com/o/json%2FRC1-1.json?alt=media&token=6b5b8fdb-3776-4b83-ac0f-03765bd79b3d')
+            .then((res) => res.json())
+            .then((data) => {
+                // console.log("c" + practice[0].Question);
+                realm.write(() => {
+                    data.forEach(function (element) {
+                        console.log(element.Question);
+                        realm.create('test6', {
+                            Question: element.Question,
+                            Content: element.Content,
+                            OptionA: element.OptionA,
+                            OptionB: element.OptionB,
+                            OptionC: element.OptionC,
+                            OptionD: element.OptionD,
+                            //Translate: element.Translate,
+                            //ShowExplain: element.ShowExplain,
+                            Answer: element.Answer
+                        });
+                    }, this);
+
+                });
+
+                console.log("ahihi"+realm.objects('test6').length);
+
+            })
+
+        let display1 = this.props.arrWords[this.props.stt].showTextExplain1 ? `${realm.objects('test6')[this.props.stt].Translate}` : '';
+        let display2 = this.props.arrWords[this.props.stt].showTextExplain2 ? `${realm.objects('test6')[this.props.stt].ShowExplain}` : '';
 
         return (
             <ScrollView style={styles.scrollview}>
-
-
                 <View style={{ flexDirection: 'row', }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Question {practice[this.props.stt].Question} : </Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Question {realm.objects('test6')[this.props.stt].Question} :</Text>
                     <TouchableOpacity style={this.props.arrWords[this.props.stt].checked ? styles.showbutton : styles.hidden} onPress={() => { this._discuss() }}>
                         <Text style={{ fontSize: 20, color: "dodgerblue", backgroundColor: "white", }} >Discuss</Text>
                     </TouchableOpacity>
                 </View>
 
-                <Text style={{ fontSize: 20, }}>{`${practice[this.props.stt].Content}`}</Text>
+                <Text style={{ fontSize: 20, }}>{realm.objects('test6')[this.props.stt].Content}</Text>
 
                 <View style={styles.button3}>
                     <View style={{ flex: 1, justifyContent: "center", alignItems: "baseline" }}>
 
-                        <TouchableOpacity onPress={() => { this._choose(this.props.stt, "A") }} disabled={this.props.arrWords[this.props.stt].checked}>
-                            <View style={{ backgroundColor: 'rgba(0,0,0,0)' }}>
-                                <Text style={this.props.arrWords[this.props.stt].answer === "A" ? styles.optionChoose : styles.optionDefault} > (A) {`${practice[this.props.stt].OptionA}`} </Text>
+                        <TouchableOpacity 
+                            onPress={() => { this._choose(this.props.stt, "A") }} 
+                            disabled={this.props.arrWords[this.props.stt].checked}
+                            style ={
+                                this.props.arrWords[this.props.stt].answer === "A" ? styles.optionChoose : styles.optionNoChoose
+                            }
+                            >
+                            <View>
+                                <Text 
+                                     style={this.props.arrWords[this.props.stt].checked
+                                            ? ("A" === `${realm.objects('test6')[this.props.stt].Answer}` 
+                                                 ? styles.optionGreen : styles.optionRed
+                                                )
+                                            :  (this.props.arrWords[this.props.stt].answer === "A" 
+                                                ? styles.optionWhite : styles.optionBlue)
+                                            }
+                                > (A) {realm.objects('test6')[this.props.stt].OptionA} </Text>
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => { this._choose(this.props.stt, "B") }} disabled={this.props.arrWords[this.props.stt].checked}>
-                            <Text style={this.props.arrWords[this.props.stt].answer === "B" ? styles.optionChoose : styles.optionDefault}> (B) {`${practice[this.props.stt].OptionB}`} </Text>
+                        <TouchableOpacity 
+                            onPress={() => { this._choose(this.props.stt, "B") }} 
+                            disabled={this.props.arrWords[this.props.stt].checked}
+                            style ={
+                                this.props.arrWords[this.props.stt].answer === "B" ? styles.optionChoose : styles.optionNoChoose
+                            }
+                            >
+                            <View>
+                                <Text 
+                                     style={this.props.arrWords[this.props.stt].checked
+                                            ? ("B" === `${realm.objects('test6')[this.props.stt].Answer}` 
+                                                 ? styles.optionGreen : styles.optionRed
+                                                )
+                                            :  (this.props.arrWords[this.props.stt].answer === "B" 
+                                                ? styles.optionWhite : styles.optionBlue)
+                                            }
+                                > (B) {realm.objects('test6')[this.props.stt].OptionB} </Text>
+                            </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => { this._choose(this.props.stt, "C") }} disabled={this.props.arrWords[this.props.stt].checked}>
-                            <Text style={this.props.arrWords[this.props.stt].answer === "C" ? styles.optionChoose : styles.optionDefault} > (C) {`${practice[this.props.stt].OptionC}`} </Text>
+                        <TouchableOpacity 
+                            onPress={() => { this._choose(this.props.stt, "C") }} 
+                            disabled={this.props.arrWords[this.props.stt].checked}
+                            style ={
+                                this.props.arrWords[this.props.stt].answer === "C" ? styles.optionChoose : styles.optionNoChoose
+                            }
+                            >
+                            <View>
+                                <Text 
+                                     style={this.props.arrWords[this.props.stt].checked
+                                            ? ("C" === `${realm.objects('test6')[this.props.stt].Answer}` 
+                                                 ? styles.optionGreen : styles.optionRed
+                                                )
+                                            :  (this.props.arrWords[this.props.stt].answer === "C" 
+                                                ? styles.optionWhite : styles.optionBlue)
+                                            }
+                                > (C) {realm.objects('test6')[this.props.stt].OptionC} </Text>
+                            </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => { this._choose(this.props.stt, "D") }} disabled={this.props.arrWords[this.props.stt].checked}>
-                            <Text style={this.props.arrWords[this.props.stt].answer === "D" ? styles.optionChoose : styles.optionDefault} > (D) {`${practice[this.props.stt].OptionD}`} </Text>
+                        <TouchableOpacity 
+                            onPress={() => { this._choose(this.props.stt, "D") }} 
+                            disabled={this.props.arrWords[this.props.stt].checked}
+                           style ={
+                                this.props.arrWords[this.props.stt].answer === "D" ? styles.optionChoose : styles.optionNoChoose
+                            }
+                            >
+                            <View>
+                                <Text 
+                                     style={this.props.arrWords[this.props.stt].checked
+                                            ? ("D" === `${realm.objects('test6')[this.props.stt].Answer}` 
+                                                 ? styles.optionGreen : styles.optionRed
+                                                )
+                                            :  (this.props.arrWords[this.props.stt].answer === "D" 
+                                                ? styles.optionWhite : styles.optionBlue)
+                                            }
+                                > (D) {realm.objects('test6')[this.props.stt].OptionD} </Text>
+                            </View>
                         </TouchableOpacity>
 
                     </View>
                     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                        <TouchableOpacity style={this.props.arrWords[this.props.stt].showCheck ? styles.showbutton : styles.hidden}
+                        <TouchableOpacity style={this.props.arrWords[this.props.stt].showCheck 
+                        ? styles.showbutton 
+                        : styles.hidden}
                             onPress={() => { this._check() }}>
                             <Icon
                                 reverse
@@ -144,7 +216,6 @@ class TestContent extends Component {
     }
 }
 
-const practice = [];
 
 function mapStateToProps(state) {
     return {
