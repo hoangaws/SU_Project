@@ -7,16 +7,17 @@ import {
   Dimensions,
   Platform
 } from 'react-native';
-import Button from 'react-native-button';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import ActionCreators from '../actions';
+
+import ActionCreators from '../Redux/helpers/combineAction';
+
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Video from 'react-native-video';
-import Styles from '../styles';
-import * as Utils from '../helpers/utils';
-import {ForwardButton, BackwardButton, PlayButton, ShuffleButton, VolumeButton, DownloadButton, SongSlider} from '../components/PlayerButtons';
+import Styles from '../Redux/styles/index';
+import * as Utils from '../Redux/utils/utils';
+import {ForwardButton, BackwardButton, PlayButton, ShuffleButton, VolumeButton, DownloadButton, SongSlider} from '../Container/PlayerButtons';
 import MusicControl from 'react-native-music-control';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -198,7 +199,7 @@ class Player extends Component {
     MusicControl.on('previousTrack', this.goBackward.bind(this));
   }
 
-  songImage = require('../img/music.jpg');
+  songImage = require('./img/music.jpg');
 
   render() {
       let song = this.props.songs[this.props.songIndex];

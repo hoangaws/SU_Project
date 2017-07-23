@@ -13,7 +13,6 @@ import MiniPlayer from './MiniPlayer';
 // import Styles from '../styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
 const TabIcon = (props) => <Icon size={24} name={props.name} color={props.selected ? "black" : "#c8c3c3"} />;
 
 const store = createStore(reducer, applyMiddleware(thunk));
