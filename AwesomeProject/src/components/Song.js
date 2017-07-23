@@ -11,20 +11,19 @@ import {
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Styles from '../Redux/styles/index';
+import Styles from '../styles';
 import Swipeout from 'react-native-swipe-out';
 import * as Progress from 'react-native-progress';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-import ActionCreators from '../Redux/helpers/combineAction';
+import ActionCreators from '../actions';
 
 let { height, width } = Dimensions.get('window');
 
 class Song extends Component {
   state = {
-    songImage: "../Presentation/img/music.jpg",
+    songImage: "../img/music.jpg",
     downloading: false
   }
 

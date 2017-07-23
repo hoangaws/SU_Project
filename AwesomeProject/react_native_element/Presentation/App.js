@@ -62,11 +62,3 @@ export default class App extends Component {
         );
     }
 }
-
-let style = StyleSheet.create({
-    tabBarStyle: {
-        borderColor: 'blue',
-        backgroundColor: 'blue',
-        borderBottomWidth: 1
-    }
-});
