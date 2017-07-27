@@ -49,7 +49,7 @@ class Song extends Component {
 }
 
 
-function SearchedSong() {//bài hát chưa download xuống local
+function SearchedSong() {//renderlist màn hình sreach
   let song = this.props.searchResults[this.props.songIndex];
   return (
     <TouchableOpacity style={Styles.searchSongContainer} onPress={() => this.props.onPress(song.downloaded)}>
@@ -68,7 +68,7 @@ function SearchedSong() {//bài hát chưa download xuống local
 }
 
 
-function DownloadedSong() {//bài hát đã download xuống local rồi
+function DownloadedSong() {// render list màn hình dowload
   return (
     <Swipeout
       right={this.swipeBtns}
@@ -83,11 +83,11 @@ function DownloadedSong() {//bài hát đã download xuống local rồi
           />
           <View style={Styles.songTitleContainer}>
             <Text style={Styles.songArtistText} numberOfLines={1}>{this.props.artistName || "Unknown Artist"}</Text>
-            <Text style={Styles.songTitleText} numberOfLines={1}>{this.props.songName || "Unknown Song"}</Text>
+            {/*<Text style={Styles.songTitleText} numberOfLines={1}>{this.props.songName || "Unknown Song"}</Text>*/}
           </View>
-          {renderProgressBar.call(this, true) 
+          {/*{renderProgressBar.call(this, true) 
             //download là songs(đã download rồi)
-          }
+          }*/}
           
         </View>
       </TouchableOpacity>
@@ -95,19 +95,27 @@ function DownloadedSong() {//bài hát đã download xuống local rồi
 }
 
 function renderProgressBar(downloads) {
+
   let song = this.props[downloads ? 'songs' : 'searchResults'][this.props.songIndex];
+
+  // Vòng tròn xoay chuẩn bị download
   if (song.preparing) {
     return <ActivityIndicator animating={true} size='small' />
   }
 
+  // đã download xong -> hiện nút play
   if (song.downloaded && !downloads) {//downloaded đã tải xong
     //!downloads (chưa download ,hay ko phải state songs)
     return (
       <View style={{ width: 60, paddingLeft: 20 }}>
-        <Icon name='md-play' size={40} />
+        <Icon name='md-play' size={40}
+          //Icon có hình play
+         />
+        
       </View>)
   }
 
+  // Đang tải -> hiện thanh progress 
   var progress = this.props.progreses[this.props.id];
   if (song.downloading || this.state.downloading) {
     return (<AnimatedCircularProgress
@@ -120,12 +128,13 @@ function renderProgressBar(downloads) {
 
   if (downloads) return null;
 
+  // Nếu chưa download -> hiện nút download
   return (
     <TouchableOpacity 
       onPress={() => !song.downloading && this.downloadMusic(song)} //
       style={{ width: 60, paddingLeft: 20 }}>
       <Icon name='md-download' size={40} 
-        //Icon có hình download ban đầu
+        //Icon có hình download 
       />
     </TouchableOpacity>
   )

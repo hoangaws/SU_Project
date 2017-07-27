@@ -5,20 +5,33 @@ import {AsyncStorage} from 'react-native';
 import RNFS from 'react-native-fs';
 import _ from 'underscore';
 
-let DOWNLOADING_SONGS = [], DOWNLOADED_SONGS = [];
+let DOWNLOADING_SONGS = [],//danh sách đang download
+     DOWNLOADED_SONGS = [];// danh sách đã download
 
 export function downloadMusic(song, changedPath, recover) {
     return async (dispatch) => {
       try {
-        if(song.downloading) return;
-        song.preparing = true;
-        song.downloading = true;
+        if(song.downloading) return;// nếu bài hát đang download thì return luôn
+        song.preparing = true;// bật cờ chuẩn bị tải
+        song.downloading = true;// bật cờ đang tải
+
+        // danh sách bài hát lưu ở local
         let songs = await Utils.getSongsFromStorage();
-        if(!recover && Utils.findSongInCollection(song.id, songs)) return {};
+
+        // tìm bài hát có trong songs(lưu ở local)
+        if(   //!recover && 
+          Utils.findSongInCollection(song.id, songs)) return {};
+
+        // push vào danh sách đang download
         DOWNLOADING_SONGS.push(song);
+
         let dirs = RNFetchBlob.fs.dirs;
         let songInfo = {url: song.path}
         if(!changedPath) {
+          // {
+          //   "status": true, 
+          //   "url": "http://52.232.85.160/ratmkowFc4A"
+          // }
           songInfo = await Utils.getSongInfo(song.path, song.id);
         }
         song.preparing = false;
@@ -36,18 +49,21 @@ export function downloadMusic(song, changedPath, recover) {
                           })
                           .fetch('GET', recover? Utils.getThumbUrl(song.id): song.thumb, {});
 
-          song.downloading = false;
-          song.downloaded = true;
-          song.path = songRes.path();
-          song.thumb = imgRes.path();
-          song.key = song.id;
-          DOWNLOADING_SONGS.pop();
-          DOWNLOADED_SONGS.push(song);
-          if(!DOWNLOADING_SONGS.length) {
+          song.downloading = false;// tắt cờ đang tải
+          song.downloaded = true;// bật cờ đã tải xong
+          song.path = songRes.path();// set path cho video
+          song.thumb = imgRes.path();//set path cho ảnh
+          song.key = song.id;//set id cho video
+
+          DOWNLOADING_SONGS.pop();//lấy ra khỏi ds đang download
+          DOWNLOADED_SONGS.push(song);// bỏ vào ds đã download
+
+          if(!DOWNLOADING_SONGS.length) {// ko còn video nào đang tải nữa
             let updatedSongs = await Utils.setSongsToStorage(DOWNLOADED_SONGS, recover);
-            DOWNLOADED_SONGS = [];
+            DOWNLOADED_SONGS = [];// reset ds đã download xong về rỗng
             return dispatch(setSongs(updatedSongs));
           }
+
       } catch(err) {
         DOWNLOADING_SONGS.pop();
         song.downloading = false;
@@ -58,6 +74,15 @@ export function downloadMusic(song, changedPath, recover) {
       }
     }
 }
+
+export function setProgress(progress, id) {
+  return {
+    type: types.PROGRESS,// type là đang tải
+    progress,// phần trăm tải xong
+    id//id của video tải
+  }
+}
+
 
 export function musicDownloaded(path) {
   return {
@@ -91,13 +116,6 @@ export function setSongs(songs) {
   }
 }
 
-export function setProgress(progress, id) {
-  return {
-    type: types.PROGRESS,
-    progress,
-    id
-  }
-}
 
 export function recoverDeletedSongs(songs) {
   return async dispatch => {

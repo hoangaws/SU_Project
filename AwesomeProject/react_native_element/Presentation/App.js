@@ -39,15 +39,15 @@ export default class App extends Component {
                     <RouterWithRedux>
                         <Scene key="root" >
                             <Scene key="home" initial tabs={true}>
-                                {/*<Scene key="search" component={RadarChartScreen} hideTabBar={true} title="RadarChartScreen" duration={0} icon={TabIcon} animation="fade" />
-                                <Scene key="download" component={ScreenA} initial
+                                <Scene key="search1" component={RadarChartScreen} hideTabBar={true} title="RadarChartScreen" duration={0} icon={TabIcon} animation="fade" />
+                                <Scene key="download1" component={ScreenA} initial
                                     title="ScreenA"
                                     renderLeftButton={() => <Text>asad</Text>}
                                     renderRightButton={() => <Text>+</Text>}
                                     duration={0} icon={TabIcon} animation="fade" />
                                 <Scene key="book" component={ScreenA} hideNavBar={true} title="RadarChartScreen" duration={0} icon={TabIcon} animation="fade" />
                                 <Scene key="star" component={Test} hideNavBar={true} hideTabBar={true} title="Test" duration={0} icon={TabIcon} animation="fade" />
-                                <Scene key="table" component={RealmClass} title="Test" hideNavBar={true} duration={0} icon={TabIcon} animation="fade" />*/}
+                                <Scene key="table" component={RealmClass} title="Test" hideNavBar={true} duration={0} icon={TabIcon} animation="fade" />
 
                                 <Scene key="search" component={Search} title="Search" duration={0} icon={TabIcon} animation="fade" />
                                 <Scene key="download" component={Downloads} initial title="Downloads" duration={0} icon={TabIcon} animation="fade" />

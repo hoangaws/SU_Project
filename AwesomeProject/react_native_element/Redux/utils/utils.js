@@ -64,12 +64,28 @@ export async function getSongsFromStorage() {
   return JSON.parse(songs);
 }
 
+// lưu video xuống storage
+export async function setSongsToStorage(songs, recover) {
+  let storageSongs = await getSongsFromStorage();
+  // storageSongs = recover ? deleteRecoverSongs([...storageSongs], [...songs]) : storageSongs;
+  let newSongs = [...storageSongs, ...songs];
+  await AsyncStorage.setItem('songs', JSON.stringify(newSongs));
+  return newSongs;
+}
+
+function deleteRecoverSongs(oldSongs, newSongs) {
+  return _.filter(oldSongs, song => {
+    return !_.findWhere(newSongs, { id: song.id });
+  });
+}
+
 export async function getSongFromStorage(id) {
   let songs = await AsyncStorage.getItem('songs');
   songs = songs || JSON.stringify([]);
   return _.findWhere(JSON.parse(songs), { id });
 }
 
+// trả về mảng gồm status và link để tải mp4
 export async function getSongInfo(path, recoverId) {
   let res = await fetch(recoverId ? getSongUrl(recoverId) : path);
   // {
@@ -81,20 +97,9 @@ export async function getSongInfo(path, recoverId) {
   throw data.error;
 }
 
-export async function setSongsToStorage(songs, recover) {
-  let storageSongs = await getSongsFromStorage();
-  storageSongs = recover ? deleteRecoverSongs([...storageSongs], [...songs]) : storageSongs;
-  let newSongs = [...storageSongs, ...songs];
-  await AsyncStorage.setItem('songs', JSON.stringify(newSongs));
-  return newSongs;
-}
+
 
 export function getThumbUrl(id) {
   return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
 }
 
-function deleteRecoverSongs(oldSongs, newSongs) {
-  return _.filter(oldSongs, song => {
-    return !_.findWhere(newSongs, { id: song.id });
-  });
-}

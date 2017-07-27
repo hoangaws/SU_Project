@@ -19,7 +19,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 class Search extends Component {
   state = {
     searchQuery: '',//giá trị ban đầu của searchQuery là rỗng
-    page: 'search'
+    page: 'search1'
   }
 
   render() {
