@@ -59,6 +59,8 @@ export function downloadMusic(song, changedPath, recover) {
           DOWNLOADED_SONGS.push(song);// bỏ vào ds đã download
 
           if(!DOWNLOADING_SONGS.length) {// ko còn video nào đang tải nữa
+
+            
             let updatedSongs = await Utils.setSongsToStorage(DOWNLOADED_SONGS, recover);
             DOWNLOADED_SONGS = [];// reset ds đã download xong về rỗng
             return dispatch(setSongs(updatedSongs));

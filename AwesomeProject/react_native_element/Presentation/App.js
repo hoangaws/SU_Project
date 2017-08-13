@@ -17,7 +17,7 @@ import Player from './Player.js';
 import MiniPlayer from './MiniPlayer.js';
 import Downloads from './Downloads';
 import Search from './Search';
-
+import ListLesson from '../Container/ListLesson.js';
 
 const TabIcon = (props) => <Icon size={24} name={props.name} color={props.selected ? "black" : "#c8c3c3"} />;
 const store = createStore(combineReducer,applyMiddleware(thunk));
@@ -40,7 +40,7 @@ export default class App extends Component {
                         <Scene key="root" >
                             <Scene key="home" initial tabs={true}>
                                 <Scene key="search1" component={RadarChartScreen} hideTabBar={true} title="RadarChartScreen" duration={0} icon={TabIcon} animation="fade" />
-                                <Scene key="download1" component={ScreenA} initial
+                                <Scene key="download1" component={ListLesson} initial
                                     title="ScreenA"
                                     renderLeftButton={() => <Text>asad</Text>}
                                     renderRightButton={() => <Text>+</Text>}
@@ -50,7 +50,7 @@ export default class App extends Component {
                                 <Scene key="table" component={RealmClass} title="Test" hideNavBar={true} duration={0} icon={TabIcon} animation="fade" />
 
                                 <Scene key="search" component={Search} title="Search" duration={0} icon={TabIcon} animation="fade" />
-                                <Scene key="download" component={Downloads} initial title="Downloads" duration={0} icon={TabIcon} animation="fade" />
+                                <Scene key="download" component={Downloads} title="Downloads" duration={0} icon={TabIcon} animation="fade" />
 
                             </Scene>
                             <Scene key="player" component={Player} hideNavBar hideTabBar direction="vertical" />

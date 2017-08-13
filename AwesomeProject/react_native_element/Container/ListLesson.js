@@ -46,36 +46,6 @@ const list = [
         subtitle: 'Vice Chairman',
         icon: 'flight-takeoff'
     },
-    {
-        name: 'Amy Farha8',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President',
-        icon: 'av-timer'
-    },
-    {
-        name: 'Chris Jackson9',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman',
-        icon: 'flight-takeoff'
-    },
-    {
-        name: 'Chris Jackson10',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman',
-        icon: 'flight-takeoff'
-    },
-    {
-        name: 'Amy Farha11',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President',
-        icon: 'av-timer'
-    },
-    {
-        name: 'Chris Jackson12',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman',
-        icon: 'flight-takeoff'
-    },
 ];
 
 export default class ListLesson extends Component {

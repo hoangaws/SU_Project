@@ -43,7 +43,6 @@ class Search extends Component {
             />
           </View>
 
-
           <SearchResults
               //Hiển thị danh sách search và download
            />
